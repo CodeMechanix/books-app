@@ -11,7 +11,7 @@ export default function BookShow({ book, removeBookCallBack, editBookPropCallBac
 
   return (
     <li key={book.id} style={{ display: "flex"}}>
-      {!isEditing && <span>{book.name}</span>} 
+      {!isEditing && <input value={book.name} readOnly />}
       {isEditing && <BookEdit book={book} editBookProp={editBookProp} setIsEditing={setIsEditing} />}
       <button onClick={() => setIsEditing(!isEditing)}>{isEditing ? "Cancel" : "Edit"}</button>
       <button onClick={() => removeBookCallBack(book.id)}>Delete</button>
