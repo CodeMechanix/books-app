@@ -1,7 +1,13 @@
-export default function BookList() {
+import BookShow from "./BookShow";
+
+export default function BookList({ bookStoreState, removeBookCallBack, editBookPropCallBack }) {
   return (
-    <div>
-        <h2>Book List</h2>
-    </div>
+    
+      <ul >
+        {bookStoreState.map((book) => (
+          <BookShow book={book} removeBookCallBack={removeBookCallBack} editBookPropCallBack={editBookPropCallBack } />
+        ))}
+      </ul>
+    
   );
 }

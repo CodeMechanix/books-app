@@ -1,7 +1,9 @@
-export default function BookCreate() {
+export default function BookCreate({ onSubmitProp }) {
   return (
-    <div>
-        <h2>Create a New Book</h2>
-    </div>
+      <form onSubmit={onSubmitProp}>
+      <input type="text" placeholder="Book Name" id="bookName" />
+      <button>Add Book</button>
+
+      </form>
   );
 }

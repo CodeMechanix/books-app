@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import BookCreate from "./BookCreate";
+import BookList from "./BookList";
 
 export default function App() {
 
@@ -11,20 +13,37 @@ export default function App() {
     localStorage.setItem("bookStore", JSON.stringify(bookStore));
   }, [bookStore]);
   
+
+  const addBook = (name) => {
+    const newBook = new Book(name, crypto.randomUUID());
+    setBookStore([...bookStore, newBook]);
+  }
+
+  const removeBook = (id) => {
+    const updatedBooks = bookStore.filter((book) => book.id !== id);
+    setBookStore(updatedBooks);
+  }
+  const editBook = (id, newName) => {
+    const updatedBooks = bookStore.map((book) => {
+      if (book.id === id) {
+        return { ...book, name: newName };
+      }
+      return book;
+    });
+    setBookStore(updatedBooks);
+  }
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    const input = e.target.elements.bookName;
+    addBook(input.value);
+    input.value = "";
+  }
+
   return (
     <div>
-      <h1>Hello, World!</h1>
-      <p>Welcome to my React application.</p>
-      <button onClick={() => {
-        const newBook = new Book(`New Book ${Date.now()}`, bookStore.length + 1);
-        setBookStore([...bookStore, newBook]);
-      }}>Add Book</button>
-      <h2>Book List:</h2>
-      <ul>
-        {bookStore.map((book) => (
-          <li key={book.id}>{book.name}</li>
-        ))}
-      </ul>
+      <BookCreate onSubmitProp={onSubmit} />
+      <BookList bookStoreState={bookStore} removeBookCallBack={removeBook} editBookPropCallBack={editBook} />
     </div>
   );
 }

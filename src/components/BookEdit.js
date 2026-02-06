@@ -1,7 +1,18 @@
-export default function BookEdit() {
+export default function BookEdit({ book, editBookProp, setIsEditing }) {
+
+
+
   return (
-    <div>
-        <h2>Edit Book Details</h2>
-    </div>
+ 
+        <form onSubmit={(e) => {
+          e.preventDefault();
+          const input = e.target.elements.bookName;
+          editBookProp(book.id, input.value);
+          setIsEditing(false);
+        }}>
+            <input type="text" placeholder="Book Name" id="bookName" defaultValue={book.name} />
+            <button>Save Changes</button>
+        </form>
+   
   );
 }
